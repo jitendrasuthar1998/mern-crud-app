@@ -13,11 +13,18 @@ const router = express.Router()
 
 router.get('/', async (req, res) =>
 {
-  //
-  const todo = await Todo.find({ isComplete: false }).sort({ date: -1 })
-    .select({ name: 1, author: 1, date: 1 });
-  res.send(todo);
-  console.log(todo, 'todo');
+  //get all the todos available in todo database and sort them according to latest date, and show only selected options.
+
+  try
+  {
+    const todo = await Todo.find({ isComplete: true }).sort({ date: -1 })
+      .select({ name: 1, author: 1, date: 1, isComplete: true });
+    res.send(todo);
+  } catch (error)
+  {
+    res.status(500).send(error.message);
+    console.log(error.message);
+  }
 })
 
 //post method to post todo to the mongodb, but before it, validating name, author, uid, isComplete, date of todo by using Joi
@@ -59,5 +66,21 @@ router.post('/', async (req, res) =>
     console.log(error.message);
   }
 })
+
+//delete request
+//we can delete document by using three types.
+//deleteOne
+//deleteMany
+//findByIdAndDelete
+
+router.delete('/', async (req, res) => 
+{
+  const todo = await Todo.deleteOne({
+    isComplete: true
+  })
+
+  res.send(todo);
+}
+)
 
 module.exports = router;
