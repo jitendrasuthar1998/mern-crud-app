@@ -1,3 +1,5 @@
+//in router file, you have defined that how you want to store one document in database's collection, which is mentioned in index.js of root 
+
 const { Todo } = require('../models/todo');
 
 const express = require('express');
@@ -8,6 +10,15 @@ const Joi = require('joi');
 //creating router application by using express.Router method.
 
 const router = express.Router()
+
+router.get('/', async (req, res) =>
+{
+  //
+  const todo = await Todo.find({ isComplete: false }).sort({ date: -1 })
+    .select({ name: 1, author: 1, date: 1 });
+  res.send(todo);
+  console.log(todo, 'todo');
+})
 
 //post method to post todo to the mongodb, but before it, validating name, author, uid, isComplete, date of todo by using Joi
 router.post('/', async (req, res) =>
