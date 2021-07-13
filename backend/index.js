@@ -5,8 +5,6 @@ const express = require('express');
 //this app represent express application.
 const app = express();
 
-
-
 const mongoose = require('mongoose');
 
 app.use(cors());
@@ -45,6 +43,7 @@ mongoose.connect(connection_string, {
     console.error('MongoDB connection failed', error);
   })
 
+//get apis
 
 app.get('/', (req, res) =>
 {

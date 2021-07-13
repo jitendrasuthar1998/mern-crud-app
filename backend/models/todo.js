@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 
 //create the document structure of data saved in mongoDB database
 const todoSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlenght: 3, maxlenght: 200 },
-  author: { type: String, required: true },
+  name: { type: String, required: true, minlenght: 3, maxlength: 200 },
+  author: { type: String, minlenght: 3, maxlength: 20, required: true },
   uid: { type: String },
-  isComplete: { type: Boolean },
   date: {
     type: Date, default: new Date()
   }
